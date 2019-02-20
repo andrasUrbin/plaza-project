@@ -1,4 +1,7 @@
 package com.codecool.plaza.Exceptions;
 
-public class ShopException {
+public class ShopException extends Exception {
+    public ShopException(){
+
+    }
 }

@@ -1,4 +1,7 @@
 package com.codecool.plaza.Exceptions;
 
-public class NoSuchProductException {
+public class NoSuchProductException extends ShopException {
+    public NoSuchProductException(){
+
+    }
 }
