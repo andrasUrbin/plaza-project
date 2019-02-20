@@ -1,4 +1,4 @@
-package com.codecool;
+package com.codecool.plaza.api;
 
 public class Main {
 
