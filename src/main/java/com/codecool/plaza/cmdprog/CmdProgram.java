@@ -47,13 +47,12 @@ class CmdProgram {
 
     private void plazaMenu(PlazaImpl plaza) {
         System.out.println("Your new plaza is here: " + plaza.getName());
+        String plazaMenuOption;
+        ShopImpl myShop;
+        String tempShop;
+        String tempOwner;
 
         while (true) {
-            String plazaMenuOption;
-            ShopImpl myShop;
-            String tempShop;
-            String tempOwner;
-
             while (true) {
                 System.out.println("Press\n" + "1: List all shops\n" +
                     "2: Add a new shop\n" +
@@ -86,6 +85,9 @@ class CmdProgram {
                         }
                         break;
                     case "3":
+                        for (Shop shop : plaza.getShops()) {
+                            System.out.println(shop.getName());
+                        }
                         System.out.println("Give me a shop name to remove!");
                         String shopToRemove = scan.nextLine();
                         try {
