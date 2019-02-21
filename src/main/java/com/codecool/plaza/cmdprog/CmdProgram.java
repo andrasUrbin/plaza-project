@@ -1,20 +1,19 @@
 package com.codecool.plaza.cmdprog;
 
 import com.codecool.plaza.Exceptions.*;
-import com.codecool.plaza.api.PlazaImpl;
-import com.codecool.plaza.api.Product;
-import com.codecool.plaza.api.Shop;
-import com.codecool.plaza.api.ShopImpl;
+import com.codecool.plaza.api.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 class CmdProgram {
 
     private List<Product> cart;
-    private Scanner scan = new Scanner(System.in);
+    private static Scanner scan = new Scanner(System.in);
     SimpleDateFormat date = new SimpleDateFormat("dd-mm-yyyy");
 
     CmdProgram() {
@@ -26,8 +25,7 @@ class CmdProgram {
 
         while (true) {
             System.out.println("There's nothing here yet. Press 1 to create a new plaza or 2 to exit the app!\n");
-            int option = scan.nextInt();
-            scan.nextLine();
+            int option = inputInt();
             switch (option) {
                 case 1:
                     System.out.println("Give your new plaza a name!\n");
@@ -166,6 +164,59 @@ class CmdProgram {
                         }
                         break;
                     case "3":
+                        Product product = null;
+                        System.out.println("Do you want to create food or cloth?");
+                        boolean inCreation = true;
+                        while(inCreation){
+                            String chooseType = scan.nextLine();
+                            if(chooseType.equals("cloth")){
+                                //Creating cloth
+                                System.out.println("Enter the barcode of the product!");
+                                long barcode = inputLong();
+                                System.out.println("Enter the name of the product!");
+                                String name = scan.nextLine();
+                                System.out.println("Enter the manufacturer of the product!");
+                                String manufacturer = scan.nextLine();
+                                System.out.println("Enter the material of the product!");
+                                String material = scan.nextLine();
+                                System.out.println("Enter the type of the product!");
+                                String type = scan.nextLine();
+                                product = new ClothingProduct(barcode, name, manufacturer, material, type);
+                                inCreation = false;
+                            }else if(chooseType.equals("food")){
+                                //Creating food
+                                System.out.println("Enter the barcode of the product!");
+                                long barcode = inputLong();
+                                System.out.println("Enter the name of the product!");
+                                String name = scan.nextLine();
+                                System.out.println("Enter the manufacturer of the product!");
+                                String manufacturer = scan.nextLine();
+                                System.out.println("Enter the calories of the product!");
+                                int calories = inputInt();
+                                System.out.println("Enter the date of the product! (dd-mm-yyyy)");
+                                Date tdate = null;
+                                String tempDate = scan.nextLine();
+                                try{
+                                    tdate = date.parse(tempDate);
+                                }catch(ParseException e){
+                                    System.out.println(e);
+                                }
+                                product = new FoodProduct(barcode, name, manufacturer, calories, tdate);
+                                inCreation = false;
+
+                            }else{
+                                System.out.println("Not a valid option, try again!");
+                            }
+                        }
+                        System.out.println("How many items would you like to create?");
+                        int quantity = inputInt();
+                        System.out.println("How much would be the price of one item?");
+                        int price = inputInt();
+                        try{
+                            shop.addNewProduct(product, quantity, price);
+                        }catch(ProductAlreadyExistsException e){
+                            System.out.println(e);
+                        }
                         break;
                     case "4":
                         break;
@@ -192,6 +243,39 @@ class CmdProgram {
                 }
             }catch(ShopIsClosedException e){
                 e.printStackTrace();
+            }
+        }
+    }
+
+    static int inputInt() {
+        while (true) {
+            System.out.println("Give an int input:");
+            try {
+                return scan.nextInt();
+            }catch (java.util.InputMismatchException e) {
+                scan.nextLine();
+            }
+        }
+    }
+
+    static boolean inputBool() {
+        while (true) {
+            System.out.println("Give a boolean input:");
+            try {
+                return scan.nextBoolean();
+            }catch (java.util.InputMismatchException e) {
+                scan.nextLine();
+            }
+        }
+    }
+
+    static long inputLong() {
+        while (true) {
+            System.out.println("Give a long input:");
+            try {
+                return scan.nextLong();
+            }catch (java.util.InputMismatchException e) {
+                scan.nextLine();
             }
         }
     }
