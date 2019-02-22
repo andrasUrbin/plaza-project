@@ -14,13 +14,13 @@ class CmdProgram {
 
     private List<Product> cart;
     private static Scanner scan = new Scanner(System.in);
-    SimpleDateFormat date = new SimpleDateFormat("dd-mm-yyyy");
+    private SimpleDateFormat date = new SimpleDateFormat("dd-mm-yyyy");
 
     CmdProgram() {
         cart = new ArrayList<Product>();
     }
 
-    public void run() {
+    void run() {
         PlazaImpl plaza;
 
         while (true) {
@@ -29,6 +29,7 @@ class CmdProgram {
             switch (option) {
                 case 1:
                     System.out.println("Give your new plaza a name!\n");
+                    scan.nextLine();
                     String plazaName = scan.nextLine();
                     plaza = new PlazaImpl(plazaName);
                     plazaMenu(plaza);
@@ -36,6 +37,7 @@ class CmdProgram {
                 case 2:
                     System.out.println("Goodbye!");
                     System.exit(0);
+                    break;
                 default:
                     System.out.println("Try 1 for creating a shop or 2 for exiting the app!");
                     break;
@@ -51,7 +53,7 @@ class CmdProgram {
         String tempOwner;
 
         while (true) {
-            while (true) {
+
                 System.out.println("Press\n" + "1: List all shops\n" +
                     "2: Add a new shop\n" +
                     "3: Remove an existing shop\n" +
@@ -61,8 +63,8 @@ class CmdProgram {
                     "7: Close the plaza\n" +
                     "0: Leave plaza");
                 plazaMenuOption = scan.nextLine();
-                break;
-            }
+
+
             try {
                 switch (plazaMenuOption) {
                     case "1":
@@ -125,6 +127,7 @@ class CmdProgram {
                         System.out.println("The plaza is now closed!");
                         break;
                     case "0":
+                        System.exit(0);
                         break;
                 }
             } catch (PlazaIsClosedException e) {
@@ -133,7 +136,7 @@ class CmdProgram {
         }
     }
 
-    private void shopMenu(ShopImpl shop){
+    private void shopMenu(ShopImpl shop) {
         System.out.println("You're in the " + shop.getName());
         boolean wannaStay = true;
         while(wannaStay){
@@ -174,6 +177,7 @@ class CmdProgram {
                                 System.out.println("Enter the barcode of the product!");
                                 long barcode = inputLong();
                                 System.out.println("Enter the name of the product!");
+                                scan.nextLine();
                                 String name = scan.nextLine();
                                 System.out.println("Enter the manufacturer of the product!");
                                 String manufacturer = scan.nextLine();
@@ -188,6 +192,7 @@ class CmdProgram {
                                 System.out.println("Enter the barcode of the product!");
                                 long barcode = inputLong();
                                 System.out.println("Enter the name of the product!");
+                                scan.nextLine();
                                 String name = scan.nextLine();
                                 System.out.println("Enter the manufacturer of the product!");
                                 String manufacturer = scan.nextLine();
